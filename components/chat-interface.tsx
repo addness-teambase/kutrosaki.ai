@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { useRouter } from "next/navigation";
 
 interface Message {
     role: "user" | "assistant";
@@ -21,7 +20,6 @@ interface ChatInterfaceProps {
 }
 
 export function ChatInterface({ conversationId, initialMessages = [], onOpenSidebar }: ChatInterfaceProps) {
-    const router = useRouter();
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const hasProcessedInitialMessage = useRef(false);
     const [messages, setMessages] = useState<Message[]>(initialMessages);
