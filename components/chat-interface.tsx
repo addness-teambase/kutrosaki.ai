@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
 import { useRouter } from "next/navigation";
 
 interface Message {
@@ -24,6 +23,7 @@ interface ChatInterfaceProps {
 export function ChatInterface({ conversationId, initialMessages = [], onOpenSidebar }: ChatInterfaceProps) {
     const router = useRouter();
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const hasProcessedInitialMessage = useRef(false);
     const [messages, setMessages] = useState<Message[]>(initialMessages);
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -34,10 +34,12 @@ export function ChatInterface({ conversationId, initialMessages = [], onOpenSide
 
     // URLパラメータから初期メッセージを取得して送信
     useEffect(() => {
+        if (hasProcessedInitialMessage.current) return;
+        
         const params = new URLSearchParams(window.location.search);
         const initialMessage = params.get("initialMessage");
         if (initialMessage && initialMessages.length === 0 && messages.length === 0) {
-            setInput(initialMessage);
+            hasProcessedInitialMessage.current = true;
             // 自動送信
             setTimeout(() => {
                 const userMessage: Message = {
@@ -89,14 +91,13 @@ export function ChatInterface({ conversationId, initialMessages = [], onOpenSide
                         console.error("Error:", error);
                     } finally {
                         setIsLoading(false);
-                        setInput("");
                         // URLパラメータをクリア
                         window.history.replaceState({}, "", `/chat/${conversationId}`);
                     }
                 })();
             }, 100);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [conversationId]);
 
     const handleSend = async () => {
@@ -249,13 +250,17 @@ export function ChatInterface({ conversationId, initialMessages = [], onOpenSide
             <div className="border-t bg-background/95 backdrop-blur safe-bottom">
                 <div className="max-w-4xl mx-auto px-3 md:px-4 py-2 md:py-3">
                     <div className="flex items-end gap-2">
-                        <Input
+                        <textarea
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={handleKeyDown}
-                            placeholder="メッセージを入力..."
+                            placeholder="メッセージを入力... (Shift+Enterで改行)"
                             disabled={isLoading}
-                            className="flex-1 rounded-full border-2 resize-none text-sm md:text-base h-10 md:h-12"
+                            rows={1}
+                            className="flex-1 rounded-2xl border-2 resize-none text-sm md:text-base px-4 py-2.5 md:py-3 focus:outline-none focus:ring-2 focus:ring-ring min-h-[40px] max-h-[200px] overflow-y-auto"
+                            style={{
+                                fieldSizing: 'content',
+                            }}
                         />
                         <Button
                             onClick={handleSend}
