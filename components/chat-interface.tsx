@@ -84,8 +84,6 @@ export function ChatInterface({ conversationId, initialMessages = [], onOpenSide
                                     content: data.message,
                                 }),
                             });
-
-                            router.refresh();
                         }
                     } catch (error) {
                         console.error("Error:", error);
@@ -158,9 +156,6 @@ export function ChatInterface({ conversationId, initialMessages = [], onOpenSide
                         content: data.message,
                     }),
                 });
-
-                // 会話リストを更新
-                router.refresh();
             } else {
                 const errorMessage: Message = {
                     role: "assistant",

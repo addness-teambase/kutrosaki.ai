@@ -25,12 +25,13 @@ interface ChatWithSidebarProps {
 export function ChatWithSidebar({
     conversationId,
     initialMessages,
-    conversations,
+    conversations: initialConversations,
     userId,
 }: ChatWithSidebarProps) {
     const router = useRouter();
     const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
     const [deletingId, setDeletingId] = useState<string | null>(null);
+    const [conversations, setConversations] = useState(initialConversations);
 
     const handleNewChat = () => {
         router.push("/");
@@ -49,8 +50,12 @@ export function ChatWithSidebar({
             });
 
             if (response.ok) {
-                router.push("/");
-                router.refresh();
+                // リアルタイムで会話リストから削除
+                setConversations(prev => prev.filter(c => c.id !== convId));
+                // 削除した会話が現在表示中の場合はホームに戻る
+                if (convId === conversationId) {
+                    router.push("/");
+                }
             }
         } catch (error) {
             console.error("Error deleting conversation:", error);

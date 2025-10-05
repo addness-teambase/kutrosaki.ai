@@ -94,7 +94,6 @@ export function ConversationList({ conversations }: ConversationListProps) {
                 {!isCollapsed && (
                     <Button
                         onClick={handleNewChat}
-                        disabled={isCreating}
                         variant="default"
                         className="w-full justify-start gap-2"
                     >
@@ -115,7 +114,6 @@ export function ConversationList({ conversations }: ConversationListProps) {
                 {isCollapsed && (
                     <Button
                         onClick={handleNewChat}
-                        disabled={isCreating}
                         variant="default"
                         size="icon"
                         className="w-full"
