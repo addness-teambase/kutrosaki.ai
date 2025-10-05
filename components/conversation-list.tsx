@@ -14,12 +14,10 @@ interface Conversation {
 
 interface ConversationListProps {
     conversations: Conversation[];
-    userId: string;
 }
 
-export function ConversationList({ conversations, userId }: ConversationListProps) {
+export function ConversationList({ conversations }: ConversationListProps) {
     const router = useRouter();
-    const [isCreating, setIsCreating] = useState(false);
     const [deletingId, setDeletingId] = useState<string | null>(null);
     const [isCollapsed, setIsCollapsed] = useState(false);
 

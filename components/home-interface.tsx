@@ -19,13 +19,12 @@ interface Conversation {
 }
 
 export function HomeInterface({ userId }: HomeInterfaceProps) {
-  const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [conversations, setConversations] = useState<Conversation[]>([]);
-  const [isCreatingNew, setIsCreatingNew] = useState(false);
-  const [deletingId, setDeletingId] = useState<string | null>(null);
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-  const router = useRouter();
+    const [input, setInput] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [conversations, setConversations] = useState<Conversation[]>([]);
+    const [deletingId, setDeletingId] = useState<string | null>(null);
+    const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+    const router = useRouter();
 
   useEffect(() => {
     // 会話一覧を取得
@@ -113,7 +112,7 @@ export function HomeInterface({ userId }: HomeInterfaceProps) {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <ConversationList conversations={conversations} userId={userId} />
+      <ConversationList conversations={conversations} />
 
       <div className="flex-1 flex flex-col bg-background overflow-hidden">
         {/* モバイルヘッダー */}
@@ -197,7 +196,6 @@ export function HomeInterface({ userId }: HomeInterfaceProps) {
                     setIsMobileSidebarOpen(false);
                     handleNewChat();
                   }}
-                  disabled={isCreatingNew}
                   variant="default"
                   className="w-full justify-start gap-2"
                 >

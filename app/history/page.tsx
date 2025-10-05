@@ -17,7 +17,7 @@ export default async function HistoryPage() {
 
   return (
     <div className="flex h-screen">
-      <ConversationList conversations={conversations} userId={user.id} />
+      <ConversationList conversations={conversations} />
       <div className="flex-1 flex flex-col items-center justify-center bg-muted/30">
         <div className="text-center space-y-4">
           <h1 className="text-3xl font-bold">チャット履歴</h1>

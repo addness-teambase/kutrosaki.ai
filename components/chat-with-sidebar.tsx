@@ -73,7 +73,7 @@ export function ChatWithSidebar({
 
     return (
         <div className="flex h-screen overflow-hidden relative">
-            <ConversationList conversations={conversations} userId={userId} />
+            <ConversationList conversations={conversations} />
 
             {/* モバイルサイドバー */}
             {isMobileSidebarOpen && (
