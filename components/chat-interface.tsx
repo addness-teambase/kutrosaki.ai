@@ -194,9 +194,9 @@ export function ChatInterface({ conversationId, initialMessages = [] }: ChatInte
     };
 
     return (
-        <div className="flex flex-col h-screen bg-muted/20">
+        <div className="flex flex-col h-screen bg-muted/20 pt-16 md:pt-0">
             {/* Messages Area - LINE風 */}
-            <div className="flex-1 overflow-y-auto px-4 py-6">
+            <div className="flex-1 overflow-y-auto px-3 md:px-4 py-4 md:py-6">
                 <div className="max-w-4xl mx-auto space-y-4">
                     {messages.map((message, index) => (
                         <div
@@ -231,8 +231,8 @@ export function ChatInterface({ conversationId, initialMessages = [] }: ChatInte
             </div>
 
             {/* Input Area - LINE風 */}
-            <div className="border-t bg-background/95 backdrop-blur">
-                <div className="max-w-4xl mx-auto px-4 py-3">
+            <div className="border-t bg-background/95 backdrop-blur safe-bottom">
+                <div className="max-w-4xl mx-auto px-3 md:px-4 py-2 md:py-3">
                     <div className="flex items-end gap-2">
                         <Input
                             value={input}
@@ -240,7 +240,7 @@ export function ChatInterface({ conversationId, initialMessages = [] }: ChatInte
                             onKeyDown={handleKeyDown}
                             placeholder="メッセージを入力..."
                             disabled={isLoading}
-                            className="flex-1 rounded-full border-2 resize-none"
+                            className="flex-1 rounded-full border-2 resize-none text-sm md:text-base h-10 md:h-12"
                         />
                         <Button
                             onClick={handleSend}

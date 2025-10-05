@@ -63,54 +63,55 @@ export function HomeInterface({ userId }: HomeInterfaceProps) {
         }
     };
 
-    return (
-        <div className="flex h-screen">
-            <ConversationList conversations={conversations} userId={userId} />
-
-            <div className="flex-1 flex flex-col bg-background">
-                {/* Main Content */}
-                <div className="flex-1 flex items-center justify-center px-4">
-                    <div className="w-full max-w-2xl space-y-8">
-                        <div className="text-center space-y-4">
-                            <h2 className="text-4xl font-medium">
-                                お手伝いできることはありますか？
-                            </h2>
-                        </div>
-
-                        <div className="relative">
-                            <Input
-                                value={input}
-                                onChange={(e) => setInput(e.target.value)}
-                                onKeyDown={handleKeyDown}
-                                placeholder="質問してみましょう"
-                                disabled={isLoading}
-                                className="w-full h-14 pr-14 text-base rounded-full border-2"
-                            />
-                            <Button
-                                onClick={handleSend}
-                                disabled={!input.trim() || isLoading}
-                                size="icon"
-                                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full h-10 w-10"
-                            >
-                                <svg
-                                    width="18"
-                                    height="18"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                >
-                                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                                </svg>
-                            </Button>
-                        </div>
-                    </div>
-                </div>
+  return (
+    <div className="flex h-screen">
+      <ConversationList conversations={conversations} userId={userId} />
+      
+      <div className="flex-1 flex flex-col bg-background pt-16 md:pt-0">
+        {/* Main Content */}
+        <div className="flex-1 flex items-center justify-center px-4">
+          <div className="w-full max-w-2xl space-y-6 md:space-y-8">
+            <div className="text-center space-y-3 md:space-y-4">
+              <h2 className="text-2xl md:text-4xl font-medium">
+                お手伝いできることはありますか？
+              </h2>
             </div>
+
+            <div className="relative">
+              <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="質問してみましょう"
+                disabled={isLoading}
+                className="w-full h-12 md:h-14 pr-12 md:pr-14 text-sm md:text-base rounded-full border-2"
+              />
+              <Button
+                onClick={handleSend}
+                disabled={!input.trim() || isLoading}
+                size="icon"
+                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full h-8 w-8 md:h-10 md:w-10"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="md:w-[18px] md:h-[18px]"
+                >
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </Button>
+            </div>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 

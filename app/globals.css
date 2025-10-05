@@ -66,3 +66,17 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  /* スマホのセーフエリア対応 */
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  /* タッチ操作の改善 */
+  @media (hover: none) and (pointer: coarse) {
+    button, a {
+      -webkit-tap-highlight-color: transparent;
+    }
+  }
+}
