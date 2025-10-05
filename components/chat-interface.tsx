@@ -35,7 +35,7 @@ export function ChatInterface({ conversationId, initialMessages = [], onOpenSide
     // URLパラメータから初期メッセージを取得して送信
     useEffect(() => {
         if (hasProcessedInitialMessage.current) return;
-        
+
         const params = new URLSearchParams(window.location.search);
         const initialMessage = params.get("initialMessage");
         if (initialMessage && initialMessages.length === 0 && messages.length === 0) {
@@ -97,7 +97,7 @@ export function ChatInterface({ conversationId, initialMessages = [], onOpenSide
                 })();
             }, 100);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [conversationId]);
 
     const handleSend = async () => {

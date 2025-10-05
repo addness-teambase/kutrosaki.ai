@@ -29,7 +29,6 @@ export default async function ChatPage({ params }: { params: Promise<{ id: strin
             conversationId={id}
             initialMessages={filteredMessages}
             conversations={conversations}
-            userId={user.id}
         />
     );
 }

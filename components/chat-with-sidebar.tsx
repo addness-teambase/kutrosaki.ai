@@ -19,14 +19,12 @@ interface ChatWithSidebarProps {
         title: string;
         updated_at: string;
     }>;
-    userId: string;
 }
 
 export function ChatWithSidebar({
     conversationId,
     initialMessages,
     conversations: initialConversations,
-    userId,
 }: ChatWithSidebarProps) {
     const router = useRouter();
     const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
