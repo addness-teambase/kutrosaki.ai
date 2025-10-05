@@ -61,7 +61,7 @@ export function ConversationList({ conversations, userId }: ConversationListProp
             {/* Header */}
             <div className="p-4 border-b space-y-3">
                 <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-bold">Kurosaki AI</h2>
+                    <h2 className="text-xl font-bold">黒崎AI</h2>
                     <ThemeSwitcher />
                 </div>
                 <Button

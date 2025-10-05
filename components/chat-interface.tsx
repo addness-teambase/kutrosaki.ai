@@ -28,7 +28,7 @@ export function ChatInterface({ conversationId, initialMessages = [] }: ChatInte
             : [
                 {
                     role: "assistant",
-                    content: "こんにちは！Kurosaki AIです。何かお手伝いできることはありますか？",
+                    content: "こんにちは！黒崎AIです。何かお手伝いできることはありますか？",
                 },
             ]
     );
