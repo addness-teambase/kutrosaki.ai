@@ -256,9 +256,6 @@ export function ChatInterface({ conversationId, initialMessages = [], onOpenSide
                             disabled={isLoading}
                             rows={1}
                             className="flex-1 rounded-2xl border-2 resize-none text-sm md:text-base px-4 py-2.5 md:py-3 focus:outline-none focus:ring-2 focus:ring-ring min-h-[40px] max-h-[200px] overflow-y-auto"
-                            style={{
-                                fieldSizing: 'content',
-                            }}
                         />
                         <Button
                             onClick={handleSend}
