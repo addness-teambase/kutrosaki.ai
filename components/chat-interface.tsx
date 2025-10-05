@@ -39,6 +39,74 @@ export function ChatInterface({ conversationId, initialMessages = [] }: ChatInte
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
+    // URLパラメータから初期メッセージを取得して送信
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const initialMessage = params.get("initialMessage");
+        if (initialMessage && messages.length === 1) {
+            setInput(initialMessage);
+            // 自動送信
+            setTimeout(() => {
+                const userMessage: Message = {
+                    role: "user",
+                    content: initialMessage,
+                };
+                const newMessages = [...messages, userMessage];
+                setMessages(newMessages);
+                setIsLoading(true);
+
+                // メッセージ保存とAI応答取得
+                (async () => {
+                    try {
+                        await fetch("/api/messages", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                conversationId,
+                                role: "user",
+                                content: initialMessage,
+                            }),
+                        });
+
+                        const response = await fetch("/api/chat", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ messages: newMessages }),
+                        });
+
+                        const data = await response.json();
+                        if (response.ok) {
+                            const aiMessage: Message = {
+                                role: "assistant",
+                                content: data.message,
+                            };
+                            setMessages((prev) => [...prev, aiMessage]);
+
+                            await fetch("/api/messages", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    conversationId,
+                                    role: "assistant",
+                                    content: data.message,
+                                }),
+                            });
+
+                            router.refresh();
+                        }
+                    } catch (error) {
+                        console.error("Error:", error);
+                    } finally {
+                        setIsLoading(false);
+                        setInput("");
+                        // URLパラメータをクリア
+                        window.history.replaceState({}, "", `/chat/${conversationId}`);
+                    }
+                })();
+            }, 100);
+        }
+    }, [conversationId, messages.length, router]);
+
     const handleSend = async () => {
         if (!input.trim() || isLoading) return;
 
