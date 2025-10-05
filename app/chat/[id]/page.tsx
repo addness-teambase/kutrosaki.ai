@@ -15,10 +15,19 @@ export default async function ChatPage({ params }: { params: Promise<{ id: strin
     const messages = await getMessages(id);
     const conversations = await getConversations(user.id);
 
+    // 最初のAIメッセージを除外（「お手伝いできることはありますか？」など）
+    const filteredMessages = messages.filter((msg, index) => {
+        // 最初のメッセージがAIからのものなら除外
+        if (index === 0 && msg.role === "assistant") {
+            return false;
+        }
+        return true;
+    });
+
     return (
         <ChatWithSidebar
             conversationId={id}
-            initialMessages={messages}
+            initialMessages={filteredMessages}
             conversations={conversations}
             userId={user.id}
         />

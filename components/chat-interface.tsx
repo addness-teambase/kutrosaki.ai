@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useRouter } from "next/navigation";
@@ -17,21 +18,13 @@ interface ChatInterfaceProps {
         role: "user" | "assistant";
         content: string;
     }>;
+    onOpenSidebar?: () => void;
 }
 
-export function ChatInterface({ conversationId, initialMessages = [] }: ChatInterfaceProps) {
+export function ChatInterface({ conversationId, initialMessages = [], onOpenSidebar }: ChatInterfaceProps) {
     const router = useRouter();
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    const [messages, setMessages] = useState<Message[]>(
-        initialMessages.length > 0
-            ? initialMessages
-            : [
-                {
-                    role: "assistant",
-                    content: "こんにちは！黒崎AIです。何かお手伝いできることはありますか？",
-                },
-            ]
-    );
+    const [messages, setMessages] = useState<Message[]>(initialMessages);
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
@@ -43,7 +36,7 @@ export function ChatInterface({ conversationId, initialMessages = [] }: ChatInte
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const initialMessage = params.get("initialMessage");
-        if (initialMessage && messages.length === 1) {
+        if (initialMessage && initialMessages.length === 0 && messages.length === 0) {
             setInput(initialMessage);
             // 自動送信
             setTimeout(() => {
@@ -51,7 +44,7 @@ export function ChatInterface({ conversationId, initialMessages = [] }: ChatInte
                     role: "user",
                     content: initialMessage,
                 };
-                const newMessages = [...messages, userMessage];
+                const newMessages = [userMessage];
                 setMessages(newMessages);
                 setIsLoading(true);
 
@@ -105,7 +98,8 @@ export function ChatInterface({ conversationId, initialMessages = [] }: ChatInte
                 })();
             }, 100);
         }
-    }, [conversationId, messages.length, router]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [conversationId]);
 
     const handleSend = async () => {
         if (!input.trim() || isLoading) return;
@@ -194,9 +188,35 @@ export function ChatInterface({ conversationId, initialMessages = [] }: ChatInte
     };
 
     return (
-        <div className="flex flex-col h-screen bg-muted/20 pt-14 md:pt-0">
+        <div className="flex flex-col h-full bg-muted/20">
+            {/* モバイルヘッダー */}
+            <div className="md:hidden fixed top-0 left-0 right-0 bg-background border-b z-50 h-14">
+                <div className="flex items-center h-full px-3 gap-3">
+                    <button
+                        onClick={onOpenSidebar}
+                        className="flex items-center justify-center h-9 w-9 hover:bg-muted rounded-lg transition-colors"
+                    >
+                        <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                        >
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <Link href="/" className="text-lg font-bold flex-1 hover:opacity-70 transition-opacity">
+                        黒崎AI
+                    </Link>
+                </div>
+            </div>
+
             {/* Messages Area - LINE風 */}
-            <div className="flex-1 overflow-y-auto px-3 md:px-4 py-4 md:py-6">
+            <div className="flex-1 overflow-y-auto px-3 md:px-4 py-4 md:py-6 pt-14 md:pt-4">
                 <div className="max-w-4xl mx-auto space-y-3 md:space-y-4">
                     {messages.map((message, index) => (
                         <div
