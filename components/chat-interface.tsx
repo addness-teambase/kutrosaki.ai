@@ -194,22 +194,22 @@ export function ChatInterface({ conversationId, initialMessages = [] }: ChatInte
     };
 
     return (
-        <div className="flex flex-col h-screen bg-muted/20 pt-16 md:pt-0">
+        <div className="flex flex-col h-screen bg-muted/20 pt-14 md:pt-0">
             {/* Messages Area - LINE風 */}
             <div className="flex-1 overflow-y-auto px-3 md:px-4 py-4 md:py-6">
-                <div className="max-w-4xl mx-auto space-y-4">
+                <div className="max-w-4xl mx-auto space-y-3 md:space-y-4">
                     {messages.map((message, index) => (
                         <div
                             key={index}
                             className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
                         >
                             <div
-                                className={`max-w-[70%] rounded-2xl px-4 py-3 ${message.role === "user"
+                                className={`max-w-[85%] md:max-w-[70%] rounded-2xl px-3 md:px-4 py-2 md:py-3 ${message.role === "user"
                                     ? "bg-primary text-primary-foreground rounded-br-sm"
                                     : "bg-background border rounded-bl-sm shadow-sm"
                                     }`}
                             >
-                                <p className="text-sm whitespace-pre-wrap break-words">
+                                <p className="text-sm md:text-base whitespace-pre-wrap break-words">
                                     {message.content}
                                 </p>
                             </div>
@@ -217,7 +217,7 @@ export function ChatInterface({ conversationId, initialMessages = [] }: ChatInte
                     ))}
                     {isLoading && (
                         <div className="flex justify-start">
-                            <div className="max-w-[70%] rounded-2xl px-4 py-3 bg-background border rounded-bl-sm shadow-sm">
+                            <div className="max-w-[85%] md:max-w-[70%] rounded-2xl px-3 md:px-4 py-2 md:py-3 bg-background border rounded-bl-sm shadow-sm">
                                 <div className="flex gap-1">
                                     <div className="w-2 h-2 rounded-full bg-muted-foreground/50 animate-bounce" style={{ animationDelay: "0ms" }}></div>
                                     <div className="w-2 h-2 rounded-full bg-muted-foreground/50 animate-bounce" style={{ animationDelay: "150ms" }}></div>

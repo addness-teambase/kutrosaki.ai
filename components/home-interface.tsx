@@ -64,10 +64,10 @@ export function HomeInterface({ userId }: HomeInterfaceProps) {
     };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen overflow-hidden">
       <ConversationList conversations={conversations} userId={userId} />
       
-      <div className="flex-1 flex flex-col bg-background pt-16 md:pt-0">
+      <div className="flex-1 flex flex-col bg-background pt-14 md:pt-0">
         {/* Main Content */}
         <div className="flex-1 flex items-center justify-center px-4">
           <div className="w-full max-w-2xl space-y-6 md:space-y-8">
