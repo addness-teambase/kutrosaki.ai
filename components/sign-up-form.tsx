@@ -48,14 +48,14 @@ export function SignUpForm({
         },
       });
       if (error) throw error;
-      
+
       // セッションが作成された場合（メール確認が不要な設定の場合）は直接ホームへ
       if (data.session) {
         router.push("/");
         router.refresh();
       } else {
-        // メール確認が必要な場合は成功ページへ
-        router.push("/auth/sign-up-success");
+        // メール確認が必要な場合はログインページへ
+        router.push("/auth/login");
       }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "エラーが発生しました");
