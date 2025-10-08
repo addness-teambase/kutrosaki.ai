@@ -24,6 +24,7 @@ export function SignUpForm({
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -32,6 +33,7 @@ export function SignUpForm({
     const supabase = createClient();
     setIsLoading(true);
     setError(null);
+    setSuccess(null);
 
     if (password !== repeatPassword) {
       setError("パスワードが一致しません");
@@ -54,8 +56,8 @@ export function SignUpForm({
         router.push("/");
         router.refresh();
       } else {
-        // メール確認が必要な場合はログインページへ
-        router.push("/auth/login");
+        // メール確認が必要な場合
+        setSuccess("登録完了！メールアドレスに送信された確認リンクをクリックしてから、ログインしてください。");
       }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "エラーが発生しました");
@@ -110,6 +112,7 @@ export function SignUpForm({
                 />
               </div>
               {error && <p className="text-sm text-red-500">{error}</p>}
+              {success && <p className="text-sm text-green-600">{success}</p>}
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? "登録中..." : "登録"}
               </Button>
