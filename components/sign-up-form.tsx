@@ -40,15 +40,23 @@ export function SignUpForm({
     }
 
     try {
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/`,
+          emailRedirectTo: `${window.location.origin}/auth/confirm`,
         },
       });
       if (error) throw error;
-      router.push("/auth/sign-up-success");
+      
+      // セッションが作成された場合（メール確認が不要な設定の場合）は直接ホームへ
+      if (data.session) {
+        router.push("/");
+        router.refresh();
+      } else {
+        // メール確認が必要な場合は成功ページへ
+        router.push("/auth/sign-up-success");
+      }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "エラーが発生しました");
     } finally {

@@ -39,6 +39,7 @@ export function LoginForm({
       });
       if (error) throw error;
       router.push("/");
+      router.refresh();
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "エラーが発生しました");
     } finally {
