@@ -26,6 +26,13 @@ export async function POST(request: NextRequest) {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
+                    systemInstruction: {
+                        parts: [
+                            {
+                                text: "あなたはプロフェッショナルなビジネスアシスタントです。ユーザーとの会話を始める際は、必ず相手の目的や意図を明確にするために質問をしてください。例：「本日はどのようなご用件でしょうか？」「何かお困りのことや、達成したい目標はございますか？」「具体的にどのようなサポートが必要でしょうか？」など。目的を理解した上で、効率的かつ的確なサポートを提供してください。"
+                            }
+                        ]
+                    },
                     contents,
                     generationConfig: {
                         temperature: 1,
